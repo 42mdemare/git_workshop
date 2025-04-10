@@ -28,6 +28,7 @@ int main() {
             return 1;
         }
 
+
         switch (choice) {
             case 1:
                 // TODO: Vérifier immédiatement si le score du joueur dépasse 21 après avoir tiré une carte
