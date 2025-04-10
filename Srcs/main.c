@@ -16,42 +16,51 @@ void print_menu() {
 int main() {
     Game game;
     int choice;
+    char restart;
 
-    // Initialisation du jeu de base
-    init_game(&game);
-    display_game(&game);
+    while(1)
+    {
+        // Initialisation du jeu de base
+        init_game(&game);
+        display_game(&game);
 
-    do {
-        print_menu();
-        if (scanf("%d", &choice) != 1) {
-            printf("Entrée invalide, veuillez entrer un chiffre.\n");
-            return 1;
+        do {
+            print_menu();
+            if (scanf("%d", &choice) != 1) {
+                printf("Entrée invalide, veuillez entrer un chiffre.\n");
+                return 1;
+            }
+
+
+            switch (choice) {
+                case 1:
+                    // TODO: Vérifier immédiatement si le score du joueur dépasse 21 après avoir tiré une carte
+                        player_hit(&game);
+                display_game(&game);
+                // TODO: Si le score dépasse 21, déclarer la défaite et terminer la partie
+                break;
+                case 2:
+                    dealer_play(&game);
+                display_game(&game);
+                // TODO: Comparer les scores du joueur et du croupier pour déterminer le gagnant du jeu de base
+                // TODO: Afficher un message de victoire/défaite en fonction du résultat
+                choice = 0;  // Fin de la partie après que le joueur a choisi de rester
+                break;
+                case 0:
+                    printf("Merci d'avoir joué.\n");
+                break;
+                default:
+                    printf("Option invalide. Veuillez réessayer.\n");
+                // TODO: Proposer de redemander le choix si l'entrée est invalide
+            }
+        } while (choice != 0);
+        printf("Voulez-vous jouer à nouveau ? (o/n): ");
+        scanf(" %c", &restart);
+        if (restart != 'o' && restart != 'O') {
+            printf("Merci d'avoir joué.\n");
+            break;
         }
+    }
 
-
-        switch (choice) {
-            case 1:
-                // TODO: Vérifier immédiatement si le score du joueur dépasse 21 après avoir tiré une carte
-                    player_hit(&game);
-            display_game(&game);
-            // TODO: Si le score dépasse 21, déclarer la défaite et terminer la partie
-            break;
-            case 2:
-                dealer_play(&game);
-            display_game(&game);
-            // TODO: Comparer les scores du joueur et du croupier pour déterminer le gagnant du jeu de base
-            // TODO: Afficher un message de victoire/défaite en fonction du résultat
-            choice = 0;  // Fin de la partie après que le joueur a choisi de rester
-            break;
-            case 0:
-                printf("Merci d'avoir joué.\n");
-            break;
-            default:
-                printf("Option invalide. Veuillez réessayer.\n");
-            // TODO: Proposer de redemander le choix si l'entrée est invalide
-        }
-    } while (choice != 0);
-
-    // TODO: Ajouter une option pour redémarrer une nouvelle partie de Blackjack
     return 0;
 }
